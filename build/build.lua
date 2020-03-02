@@ -34,7 +34,7 @@ local function generate(tool)
     local i = f:read'a'
     return pre..post..'\n'..i..final
   end)
-  local f, e = io.open(tool.name, 'w')
+  local f, e = io.open('build/'..tool.name, 'w')
   if not f then
     error('can not open output file "'..tool.name..'" - '..e)
   end
