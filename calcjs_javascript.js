@@ -1,13 +1,5 @@
 
-      var editor_setup = {
-          language: "js",
-	  lineNumbers: true
-      };
-
-      function run_all(scr){
-        if (document.getElementById("appendoutput").checked === false) {
-          clear_output();
-        }
+      function run_script(scr){
         var status = 0;
 		
 		try {
@@ -18,26 +10,13 @@
 				var result = eval("(function(){\n"+scr+"\n})()");
 				append_output(result);
 			} catch (e) {
-				append_error("Error js script - "+String(e)+"\n");
+				throw("Error js script - "+String(e)+"\n");
 			}
 		}
       }
 
-      function run_editor_code(){
+      var EditorMode = "js";
 
-	var scr = editor_getText();
-   
-        var e = false;
-        try {
-          run_all(scr)
-        } catch (err) {
-          e = String(err) + "\n";
-          append_error(e);
-        }
-
-        if (e) { append_output(e); }
-      }
-
-      function my_init(editor){
+      function my_init(editor, scr){
       }
 

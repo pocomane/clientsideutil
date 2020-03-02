@@ -5377,20 +5377,16 @@ if (typeof exports === 'object' && typeof module === 'object')
         `);
       };
 
-      function my_init(editor){
-	      CodeFlaskLua(editor);
-        WaLua().then(function(){
-          var L = document.getElementById("setup_script").innerHTML;
-          //fengari.load(L)();
-          run_all(L);
-        });
-      }
-
 // --------------------------------------------------------------------------------
 
-      var editor_setup = {
-          language: "lua",
-	  lineNumbers: true
+      var EditorMode = "lua";
+
+      function my_init(editor, scr){
+	      CodeFlaskLua(editor);
+        WaLua().then(function(){
+          //fengari.load(scr)();
+          run_script(scr);
+        });
       }
 
       function run_lua(){
@@ -5402,10 +5398,7 @@ if (typeof exports === 'object' && typeof module === 'object')
         });
       }
 
-      function run_all(scr){
-        if (document.getElementById("appendoutput").checked === false) {
-          clear_output();
-        }
+      function run_script(scr){
         var status = compile_lua(scr);
         //console.log("DEBUG Lua Compiler result:",status);
         if (status != 0) {
@@ -5414,21 +5407,4 @@ if (typeof exports === 'object' && typeof module === 'object')
           requestAnimationFrame(run_lua);
         }
       }
-
-      function run_editor_code(){
-
-	var scr = editor_getText();
-   
-        var e = false;
-        try {
-          //fengari.load(scr, "achunk")();
-          run_all(scr)
-        } catch (err) {
-          e = String(err) + "\n";
-          append_error(e);
-        }
-
-        if (e) { append_output(e); }
-      }
-
 

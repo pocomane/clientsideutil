@@ -5391,20 +5391,16 @@ if (typeof exports === 'object' && typeof module === 'object')
         `);
       };
 
-      function my_init(editor){
-	      CodeFlaskLua(editor);
-        WaLua().then(function(){
-          var L = document.getElementById("setup_script").innerHTML;
-          //fengari.load(L)();
-          run_all(L);
-        });
-      }
-
 // --------------------------------------------------------------------------------
 
-      var editor_setup = {
-          language: "lua",
-	  lineNumbers: true
+      var EditorMode = "lua";
+
+      function my_init(editor, scr){
+	      CodeFlaskLua(editor);
+        WaLua().then(function(){
+          //fengari.load(scr)();
+          run_script(scr);
+        });
       }
 
       function run_lua(){
@@ -5416,10 +5412,7 @@ if (typeof exports === 'object' && typeof module === 'object')
         });
       }
 
-      function run_all(scr){
-        if (document.getElementById("appendoutput").checked === false) {
-          clear_output();
-        }
+      function run_script(scr){
         var status = compile_lua(scr);
         //console.log("DEBUG Lua Compiler result:",status);
         if (status != 0) {
@@ -5428,23 +5421,6 @@ if (typeof exports === 'object' && typeof module === 'object')
           requestAnimationFrame(run_lua);
         }
       }
-
-      function run_editor_code(){
-
-	var scr = editor_getText();
-   
-        var e = false;
-        try {
-          //fengari.load(scr, "achunk")();
-          run_all(scr)
-        } catch (err) {
-          e = String(err) + "\n";
-          append_error(e);
-        }
-
-        if (e) { append_output(e); }
-      }
-
 
 </script>
 
@@ -5529,7 +5505,7 @@ if (typeof exports === 'object' && typeof module === 'object')
 // ----------------------------------------------------------------------------
 
       var editor
-      function editor_init(){
+      function editor_init(editor_setup){
 	editor = new CodeFlask("#editor",editor_setup);
 	var el = document.getElementById("editor");
 	if (el.style.position == "") { el.style.position = "relative"; };
@@ -5591,20 +5567,43 @@ if (typeof exports === 'object' && typeof module === 'object')
           }
         }
 
-	editor_init();
-	editor_setText(exscr);
-
         document.getElementById("resizable").onmouseup = function(){
 	  editor_updateGeometry();
         }
 
-        my_init(editor);
+	editor_init({
+          language: EditorMode, // EditorMode must be defined in the external script
+	  lineNumbers: true
+      });
+
+        my_init(editor, document.getElementById("setup_script").innerHTML);
+
+	editor_setText(exscr);
       }
+
+  function execute_script(scr){
+
+        if (document.getElementById("appendoutput").checked === false) {
+          clear_output();
+        }
+        var e = false;
+        try {
+          run_script(scr); // run_script must be provided by external script
+        } catch (err) {
+          e = String(err) + "\n";
+          append_error(e);
+        }
+        if (e) { append_output(e); }
+  }
+
+  function app_run(){
+      return execute_script(editor_getText());
+  }
 
   onkeydown = function(e) {
     if (e.key == "Escape") {
       mod = false;
-      run_editor_code();
+      app_run();
     }
   };
 
@@ -5655,7 +5654,7 @@ if (typeof exports === 'object' && typeof module === 'object')
     </div>
     <div id="middlemenu" style="flex:0 0 auto" >
 
-      <button type="button" onclick="run_editor_code()" >Run</button>
+      <button type="button" onclick="app_run()" >Run</button>
       <input type="checkbox" id="appendoutput">Append to the output</input>
       <input type="file" id="loadfile" onchange="loadfile()" style="width:0;height:0" ></input>
       <button id="loadbutton" onclick="document.getElementById('loadfile').click()" >Load</button>
