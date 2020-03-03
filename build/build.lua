@@ -21,6 +21,13 @@ local tool = {
     setup_script = "luavm_setup.lua",
     initial_content = "luavm_initial.lua",
   },
+  {
+    name = "luasnip_playground.html",
+    wrapper = "scriptedit.html",
+    javascript_global = {"luavm_javascript.js", "build/walua/walua_build/walua.merged.js", "build/CodeFlask/build/codeflask.min.js", },
+    setup_script = { "luavm_setup.lua", "build/luasnip_wrapped.lua", },
+    initial_content = "luasnip_initial.lua",
+  },
 }
 
 local function gitget(url)
@@ -35,8 +42,15 @@ local function gitget(url)
 end
 
 local function getdeps()
-  gitget('http://github.com/pocomane/walua')
   gitget('https://github.com/kazzkiq/CodeFlask')
+  gitget('http://github.com/pocomane/walua')
+  gitget('http://github.com/pocomane/luasnip')
+end
+
+local function luasnipwrap()
+  local ls = io.open("build/luasnip/tool/luasnip.lua","r"):read("a")
+  ls = '\n\nluasnip=(function()\n'..ls..'\nend)()\n\n'
+  local ls = io.open("build/luasnip_wrapped.lua","w"):write(ls):close()
 end
 
 local function generate(tool)
@@ -71,6 +85,7 @@ end
 
 local function main(arg)
   getdeps()
+  luasnipwrap()
   for _, v in pairs(tool) do
     generate(v)
   end

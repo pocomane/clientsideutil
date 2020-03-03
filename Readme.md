@@ -6,6 +6,7 @@ This is a collection of utilities released as single html file app:
 - [Js calculator](https://raw.githack.com/pocomane/clientsideutil/master/build/calcjs.html).
 - [Lua playground](https://raw.githack.com/pocomane/clientsideutil/master/build/luavm.html).
 - [Lua calculator](https://raw.githack.com/pocomane/clientsideutil/master/build/calclua.html).
+- [Luasnip playground](https://raw.githack.com/pocomane/clientsideutil/master/build/luasnip_playground.html).
 
 Since they are fully client-side and they are distributed as single html file, you can also run it from disk whitout a proper web server.
 
@@ -28,7 +29,7 @@ directly from the hard disk. I.e.  file:// and CORS must be allowed in the
 browser when loading a file from the disk. Instead, the embedded version should
 work out of the box.
 
-# Lua playground
+# Lua VM
 
 This tool that let you to edit and run lua code in the browser. The editor is
 [codeflask.js](https://kazzkiq.github.io/CodeFlask). The VM is the official PUC
@@ -78,6 +79,11 @@ set_collaborative()
 
 where `myfunction` is the name of the function to be wrapped. In this way the
 browser have the chance to update the page before `myfunction` returns.
+
+# Luasnip playground
+
+This works the same as the `Lua VM` tool, but it comes with
+[Luasnip](https://raw.githack.com/pocomane/luasnip) built in.
 
 # Js/lua Calculator
 

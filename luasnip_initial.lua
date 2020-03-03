@@ -1,5 +1,9 @@
 print [[
-  This is a lua playground. It uses the official lua VM
+
+  This is a playground designed to try LuaSnip
+  - https://github.com/pocomane/luasnip/blob/master/documentation.adoc
+
+  It uses the official lua VM
   - https://lua.org
 
   It runs fully in-browser thanks to web assembly and Emscripten
@@ -11,4 +15,5 @@ print [[
   - https://kazzkiq.github.io/CodeFlask
 ]]
 
-print(walua_version, math.random())
+print(math.random())
+print(luasnip.subbytebase(6,luasnip.sha2'Hello World!'))
