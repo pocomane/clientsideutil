@@ -39,8 +39,7 @@ The playground uses a error handler to write stack dump in case of error.
 Please note that the browser blocks while the script is running, so the browser
 is not updated during the execution. There is a quick workaround in the
 playground.  Normally the [following
-code](https://raw.githack.com/pocomane/walua/master/walua_build/playground.html?
-cHJpbnQnb25lJwpsb2NhbCBzID0gb3MuY8SLY2soKQp3aGlsZcSUxJbEmMSMxJspIC3EkCA8IDEgZG8gZW5kCsSAxILEhHR3b8SJ):
+code](https://raw.githack.com/pocomane/clientsideutil/master/build/luavm.html?cHJpbnQnb25lJwpsb2NhbCBzID0gb3MuY8SLY2soKQp3aGlsZcSUxJbEmMSMxJspIC3EkCA8IDEgZG8gZW5kCsSAxILEhHR3b8SJ):
 
 ```
 print'one'
