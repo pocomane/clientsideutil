@@ -11,5 +11,7 @@ Just run the build script in the project root directory:
 
 > lua ./build/build.lua
 
-All the results will be updated in the `build` directory.
+It will download the dependencies (make sure git is installed) and it will
+merge sources and dependencies in self-contained html files. All the results
+will be updated in the `build` directory.
 
