@@ -83,7 +83,7 @@ browser have the chance to update the page before `myfunction` returns.
 # Luasnip playground
 
 This works the same as the `Lua VM` tool, but it comes with
-[Luasnip](https://raw.githack.com/pocomane/luasnip) built in.
+[Luasnip](https://github.com/pocomane/luasnip) built in.
 
 # Js/lua Calculator
 
