@@ -14,6 +14,13 @@ local tool = {
     setup_script = "calclua_setup.lua",
     initial_content = "calclua_initial.lua",
   },
+  {
+    name = "luavm.html",
+    wrapper = "scriptedit.html",
+    javascript_global = {"luavm_javascript.js", "build/walua/walua_build/walua.merged.js", "build/CodeFlask/build/codeflask.min.js", },
+    setup_script = "luavm_setup.lua",
+    initial_content = "luavm_initial.lua",
+  },
 }
 
 local function gitget(url)
