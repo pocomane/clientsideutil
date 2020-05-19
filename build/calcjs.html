@@ -142,10 +142,13 @@ function my_init(editor, scr) {}
       function clear_output(){
         document.getElementById("output").innerHTML = "";
       }
-      
+
+      var out_area_enabled = false;
       function append_output(msg){
-        var o = document.getElementById("output");
-        o.innerHTML = o.innerHTML + msg + "\n";
+        if (out_area_enabled) {
+          var o = document.getElementById("output");
+          o.innerHTML = o.innerHTML + msg + "\n";
+        }
         console.log(msg);
       }
 	  
@@ -154,9 +157,7 @@ function my_init(editor, scr) {}
       }
 
       function append_error(msg){
-        var o = document.getElementById("output");
-        o.innerHTML = o.innerHTML + msg;
-        console.log(msg);
+	      return append_output(msg);
       }
 
       function init(){
@@ -188,6 +189,8 @@ function my_init(editor, scr) {}
       }
 
   function execute_script(scr){
+
+        out_area_enabled = true; // Enable output when the very first script is executed
 
         if (document.getElementById("appendoutput").checked === false) {
           clear_output();
@@ -272,7 +275,7 @@ function my_init(editor, scr) {}
   </div>
   <div id="bottompanel" style="overflow:auto;flex:1 1 auto" >
 
-    <pre id="output" >Output...<br/></pre>
+    <pre id="output" >Press Run button to execute the code...<br/></pre>
 
   </div>
 </div>
