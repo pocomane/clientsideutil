@@ -156,8 +156,13 @@
 	  editor_updateGeometry();
         }
 
+        var editorMode = "js";
+        if (typeof EditorMode !== 'undefined') {
+          editorMode = EditorMode;
+        }
+
 	editor_init({
-          language: EditorMode, // EditorMode must be defined in the external script
+          language: editorMode,
 	  lineNumbers: true
       });
 
