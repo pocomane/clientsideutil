@@ -157,7 +157,7 @@
         }
 
         var editorMode = "js";
-        if (typeof EditorMode !== 'undefined') {
+        if (typeof EditorMode !== 'undefined') { // configurable option
           editorMode = EditorMode;
         }
 
@@ -166,7 +166,9 @@
 	  lineNumbers: true
       });
 
-        my_init(editor, document.getElementById("setup_script").innerHTML);
+        if (typeof my_init === 'function') { // configurable callback
+          my_init(editor, document.getElementById("setup_script").innerHTML);
+        }
 
 	editor_setText(exscr);
       }
@@ -180,7 +182,12 @@
         }
         var e = false;
         try {
-          run_script(scr); // run_script must be provided by external script
+          if (typeof run_script === 'function'){ // configurable callback
+            run_script(scr);
+        } else {
+          append_output("Current script:");
+          append_output(scr);
+        }
         } catch (err) {
           e = String(err) + "\n";
           append_error(e);
