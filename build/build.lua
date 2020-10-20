@@ -3,7 +3,7 @@ local tool = {
   {
     name = "calcjs.html",
     wrapper = "scriptedit.html",
-    javascript_global = "calcjs_javascript.js",
+    javascript_global = { "calcjs_javascript.js", "build/CodeFlask/build/codeflask.min.js", },
     setup_script = "calcjs_setup.js",
     initial_content = "calcjs_initial.js",
   },
@@ -62,7 +62,7 @@ local function generate(tool)
   end
   local t = f:read'a'
   f:close()
-  t = t:gsub('(<[ \t]*script[ \t]*)src[ \t]*=[ \t]*"([^"]*)"(.->)(</[ \t]*script[ \t]*>)',function(pre, inject, post, final)
+  t = t:gsub('(<[ \t]?[^>]*script[^>]*>)//INJECT ([a-zA-Z_]*)(</script>)',function(pre, inject, post)
     inject = tool[inject]
     if type(inject) ~= 'table' then inject = {inject} end
     local i = ''
@@ -73,7 +73,7 @@ local function generate(tool)
       end
       i = i .. '\n' .. f:read'a'
     end
-    return pre..post..i..final
+    return pre..i..post
   end)
   local f, e = io.open('build/'..tool.name, 'w')
   if not f then
@@ -81,6 +81,7 @@ local function generate(tool)
   end
   f:write(t)
   f:close()
+  print('build/'..tool.name.." generated")
 end
 
 local function main(arg)
