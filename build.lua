@@ -85,6 +85,7 @@ local function generate(tool)
 end
 
 local function main(arg)
+  os.execute('mkdir -p ./build')
   getdeps()
   luasnipwrap()
   for _, v in pairs(tool) do
